@@ -2,25 +2,64 @@ import { useEffect, useState } from 'react';
 
 import { UserCard } from '../UserCard';
 import usersData from '../../data.json';
+
 import { UsersListStyled } from './UsersList.styled';
 
 const UsersList = () => {
-	const [users, setUsers] = useState([]);
+	const [users, setUsers] = useState(null);
 
 	useEffect(() => {
-		if (users.length > 0) return;
+		if (users !== null) return;
 
-		// TODO: add local storage
-		setUsers(usersData.users);
+		const followingUsersJSON = localStorage.getItem('followings');
+		const followingUsers = JSON.parse(followingUsersJSON);
+
+		const state = usersData.users.map((item) => {
+			const following = followingUsers.includes(item.id);
+			return {
+				...item,
+				following,
+				followers: item.followers + following,
+			};
+		});
+
+		setUsers(state);
 	}, [users]);
+
+	useEffect(() => {
+		if (users === null) return;
+
+		const followingUsers = users
+			.filter((item) => item.following)
+			.map((item) => item.id);
+
+		localStorage.setItem('followings', JSON.stringify(followingUsers));
+	}, [users]);
+
+	const toggleFollowing = (userId) => {
+		setUsers((prevState) => {
+			const state = prevState.map((item) => {
+				if (item.id === userId) {
+					const following = !item.following;
+					return {
+						...item,
+						following,
+						followers: item.followers + (following ? 1 : -1),
+					};
+				}
+				return item;
+			});
+			return state;
+		});
+	};
 
 	return (
 		<>
-			{users.length > 0 && (
+			{users && (
 				<UsersListStyled>
 					{users.map((item) => (
 						<li key={item.id}>
-							<UserCard {...item} />
+							<UserCard onFollowClick={toggleFollowing} {...item} />
 						</li>
 					))}
 				</UsersListStyled>

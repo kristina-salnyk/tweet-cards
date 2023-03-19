@@ -20,6 +20,7 @@ const UserCard = ({
 	followers,
 	avatar,
 	following = false,
+	onFollowClick,
 }) => {
 	return (
 		<UserCardStyled>
@@ -36,7 +37,11 @@ const UserCard = ({
 				<span>{tweets.toLocaleString('en-US')} tweets</span>
 				<span>{followers.toLocaleString('en-US')} followers</span>
 			</UserInfo>
-			<Button type='button' active={following}>
+			<Button
+				type='button'
+				onClick={() => onFollowClick(id)}
+				active={following}
+			>
 				{following ? 'Following' : 'Follow'}
 			</Button>
 		</UserCardStyled>

@@ -85,4 +85,9 @@ export const Button = styled.button`
 	border-radius: ${({ theme }) => theme.shape.borderRadius.s};
 	border: none;
 	cursor: pointer;
+	transition: opacity ${({ theme }) => theme.animation.cubicBezier};
+
+	&:hover {
+		opacity: 0.6;
+	}
 `;
