@@ -5,6 +5,7 @@ import logo from '../../assets/img/logo.svg';
 import {
 	Button,
 	CardDecoration,
+	Image,
 	ImageWrap,
 	Logo,
 	UserAvatar,
@@ -29,7 +30,7 @@ const UserCard = ({
 			<UserAvatar>
 				<UserPicture>
 					<ImageWrap>
-						<img src={avatar} alt={user} />
+						<Image src={avatar} alt={user} />
 					</ImageWrap>
 				</UserPicture>
 			</UserAvatar>

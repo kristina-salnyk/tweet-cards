@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { UserCard } from '../UserCard';
 import usersData from '../../data.json';
 
-import { UsersListStyled } from './UsersList.styled';
+import { UsersListItem, UsersListStyled } from './UsersList.styled';
 
 const UsersList = () => {
 	const [users, setUsers] = useState(null);
@@ -13,6 +13,11 @@ const UsersList = () => {
 
 		const followingUsersJSON = localStorage.getItem('followings');
 		const followingUsers = JSON.parse(followingUsersJSON);
+
+		if (!followingUsers) {
+			setUsers(usersData.users);
+			return;
+		}
 
 		const state = usersData.users.map((item) => {
 			const following = followingUsers.includes(item.id);
@@ -58,9 +63,9 @@ const UsersList = () => {
 			{users && (
 				<UsersListStyled>
 					{users.map((item) => (
-						<li key={item.id}>
+						<UsersListItem key={item.id}>
 							<UserCard onFollowClick={toggleFollowing} {...item} />
-						</li>
+						</UsersListItem>
 					))}
 				</UsersListStyled>
 			)}

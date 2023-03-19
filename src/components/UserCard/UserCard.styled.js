@@ -58,6 +58,12 @@ export const ImageWrap = styled.div`
 	overflow: hidden;
 `;
 
+export const Image = styled.img`
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+`;
+
 export const UserInfo = styled.div`
 	margin-top: 88px;
 	display: flex;
