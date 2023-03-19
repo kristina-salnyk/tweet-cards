@@ -21,7 +21,7 @@ To get started with the project, clone the repository and install the necessary 
 To run the project, use the following script:
 
 ```javascript
-   npm start
+  npm start
 ```
 This will start the development server at http://localhost:3000.
 
